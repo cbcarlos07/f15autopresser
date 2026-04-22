@@ -97,6 +97,7 @@ public class Main {
         }
 
         isActive = true;
+        atualizarIcone(); // Atualiza para verde
         timer = new Timer(true);
 
         // Agenda a tarefa para pressionar F15 a cada 120 segundos
@@ -125,6 +126,7 @@ public class Main {
             timer = null;
         }
         isActive = false;
+        atualizarIcone(); // Atualiza para vermelho
 
         trayIcon.displayMessage("F15 Auto Presser",
             "Pressionamento automático DESATIVADO!",
@@ -157,7 +159,11 @@ public class Main {
     }
 
     private static Image createTrayIcon() {
-        // Cria um ícone simples 16x16 com um círculo verde
+        return createTrayIcon(Color.RED);
+    }
+
+    private static Image createTrayIcon(Color color) {
+        // Cria um ícone simples 16x16 com um círculo colorido
         int size = 16;
         BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = image.createGraphics();
@@ -165,13 +171,20 @@ public class Main {
         // Ativa antialiasing para melhor aparência
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Desenha um círculo verde com borda preta
-        g.setColor(Color.GREEN);
+        // Desenha um círculo colorido com borda preta
+        g.setColor(color);
         g.fillOval(2, 2, size - 4, size - 4);
         g.setColor(Color.BLACK);
         g.drawOval(2, 2, size - 4, size - 4);
 
         g.dispose();
         return image;
+    }
+
+    private static void atualizarIcone() {
+        if (trayIcon != null) {
+            Color cor = isActive ? Color.GREEN : Color.RED;
+            trayIcon.setImage(createTrayIcon(cor));
+        }
     }
 }
