@@ -83,6 +83,7 @@ public class Main {
             trayIcon.displayMessage("F15 Auto Presser",
                 "Aplicação iniciada. Clique com o botão direito para ver as opções.",
                 TrayIcon.MessageType.INFO);
+            ativar();
         } catch (AWTException e) {
             System.err.println("Erro ao adicionar ícone na bandeja: " + e.getMessage());
         }
